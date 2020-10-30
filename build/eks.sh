@@ -32,3 +32,5 @@ STACK_ID=$(aws cloudformation create-stack \
 
 echo "wating for eks cluster to create, this can take up to 60 minutes..."
 aws cloudformation wait stack-create-complete --stack-name $STACK_ID  --profile ${AWS_PROFILE} --region ${AWS_REGION}
+
+aws cloudformation describe-stacks --stack-name $STACK_ID  --profile ${AWS_PROFILE} --region ${AWS_REGION} --query 'Stacks[0].Outputs[?OutputKey==`EKSClusterName`]' --output text
