@@ -1,4 +1,4 @@
-.PHONY: init dev eks docs
+.PHONY: init dev eks docs lint
 
 AWS_PROFILE ?= default
 CLUSTER_NAME ?= eks-dev
@@ -20,3 +20,5 @@ eks:
 docs:
 	./build/docs.sh
 
+lint:
+	cfn-lint ./templates/*
