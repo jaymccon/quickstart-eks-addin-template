@@ -1,6 +1,11 @@
 AWSTemplateFormatVersion: "2010-09-09"
 Description: "Deploys PPNAME into an existing kubernetes cluster (QSID)"
 Metadata:
+  LintSpellExclude:
+    - Kubernetes
+    - namespace
+    - Namespace
+    - PPNAME
   QuickStartDocumentation:
     EntrypointName: "Launch into an existing EKS cluster"
   AWS::CloudFormation::Interface:
@@ -10,36 +15,58 @@ Metadata:
         Parameters:
           - KubeClusterName
           - Namespace
+          - OverrideValues
     ParameterLabels:
       KubeClusterName:
         default: EKS cluster name
+      OverrideValues:
+        default: Override values
       Namespace:
         default: Namespace
 Parameters:
   KubeClusterName:
     Type: String
-    Description: Name of the EKS cluster to deploy PPNAME into.
+    Description: 'Name of the EKS cluster to deploy PPNAME into.'
+  OverrideValues:
+    Type: String
+    Description: (Optional) URI to a file containing values to pass to the helm install. Can be http(s):// or s3://.
+    Default: ''
   Namespace:
     Type: String
     Default: PPNAMELD
     Description: '[Optional] Kubernetes namespace to deploy PPNAME into.'
+Conditions:
+  SupplyOverrides: !Not [!Equals [!Ref OverrideValues, '']]
 Resources:
   PPNAMECNamespace:
     Type: "AWSQS::Kubernetes::Resource"
     Properties:
       ClusterName: !Ref KubeClusterName
-      Manifest: |
+      Namespace: 'kube-system'
+      Manifest: !Sub |
         kind: Namespace
         apiVersion: v1
         metadata:
-          name: !Ref Namespace
+          name: ${Namespace}
   PPNAMECHelmChart:
     Type: "AWSQS::Kubernetes::Helm"
+    DependsOn: PPNAMECNamespace
+    Metadata: { cfn-lint: { config: { ignore_checks: [ E3012 ] } } }
     Properties:
       ClusterID: !Ref KubeClusterName
-      Namespace: !GetAtt PPNAMECNamespace.Name
+      Namespace: !Ref Namespace
       Chart: repo/chart
       Name: PPNAMELD
+      ValueOverrideURL: !If [SupplyOverrides, !Ref OverrideValues, !Ref 'AWS::NoValue']
+      # Helm values can be placed in either Values, or ValueYaml properties
+      # Values:
+        # values use dot notation, the same format you would provide to the --set argument. For example:
+        # server.persistentVolume.storageClass: "gp2"
+      # for ValueYaml pass a string repesentation of a yaml file.
+      # ValueYaml: |
+        # server:
+        #   persistentVolume:
+        #     storageClass: gp2
 Outputs:
   PPNAMECReleaseName:
     Value: !GetAtt PPNAMECHelmChart.Name
