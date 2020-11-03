@@ -1,4 +1,4 @@
-.PHONY: init dev eks docs lint
+.PHONY: init dev eks docs lint test clean-stack
 
 AWS_PROFILE ?= default
 CLUSTER_NAME ?= eks-dev
@@ -22,3 +22,9 @@ docs:
 
 lint:
 	cfn-lint ./templates/*
+
+test:
+	taskcat -q test run -mnl
+
+clean-stack:
+	taskcat -q test clean $(shell pwd | awk -F'/' '{print $NF}')
