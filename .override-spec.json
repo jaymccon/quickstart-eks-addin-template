@@ -188,6 +188,9 @@
       "Attributes": {
         "ID": {
           "PrimitiveType": "String"
+        },
+        "Name": {
+          "PrimitiveType": "String"
         }
       },
       "Properties": {
