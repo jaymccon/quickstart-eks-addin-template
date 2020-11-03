@@ -11,4 +11,10 @@
 :partner-contributors: Shuai Ye, Michael McConnell, and John Smith, {partner-company-name}
 :quickstart-contributors: Toni Jones, {quickstart-team-name}
 :default_deployment_region: us-east-2
-//TODO: add links for bart links
+//links
+:launch_new_vpc: https://TODO
+:launch_existing_vpc: https://TODO
+:launch_existing_cluster: https://TODO
+:template_new_vpc: https://TODO
+:template_existing_vpc: https://TODO
+:template_existing_cluster: https://TODO
