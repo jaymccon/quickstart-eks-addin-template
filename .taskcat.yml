@@ -4,6 +4,6 @@ project:
   regions: ["us-west-2"]
   template: templates/eks-PPNAMELD.template.yaml
   parameters:
-    Namespace: [taskcat_random-string]
+    Namespace: $[taskcat_random-string]
 tests:
   default: {}
