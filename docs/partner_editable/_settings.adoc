@@ -11,6 +11,10 @@
 :partner-contributors: Shuai Ye, Michael McConnell, and John Smith, {partner-company-name}
 :quickstart-contributors: Toni Jones, {quickstart-team-name}
 :default_deployment_region: us-east-2
+
+:eks_addin:
+:disable_regions:
+:disable_licenses:
 //links
 :launch_new_vpc: https://TODO
 :launch_existing_vpc: https://TODO
