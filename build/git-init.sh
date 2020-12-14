@@ -12,8 +12,8 @@ cd "${DEST_PATH}"
 rm -rf .git docs/boilerplate
 git init
 git submodule add https://github.com/aws-quickstart/quickstart-documentation-base-common.git docs/boilerplate
+git submodule sync
+git submodule update --init --recursive --remote
 git add .
-git commit -m "Initial commit"
 
-echo "sucessfullly initialised new repo in ${DEST_PATH}. You will still need to add a remote using: "
-echo "git remote add origin <my-repo-clone url>"
+echo "sucessfullly initialised new repo in ${DEST_PATH}."
