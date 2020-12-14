@@ -1,4 +1,4 @@
-.PHONY: init dev eks docs lint test clean-stack
+.PHONY: init dev eks docs lint test clean-stack git-init
 
 AWS_PROFILE ?= default
 CLUSTER_NAME ?= eks-dev
@@ -7,6 +7,10 @@ AWS_KEYPAIR ?=
 PROJECT_NAME ?=
 PPNAMELD = $(shell echo "$(PROJECT_NAME)" | tr '[:upper:]' '[:lower:]' | sed 's/ /-/g')
 PPNAMEC = $(shell echo "$(PROJECT_NAME)" | sed -r 's/(^| )([a-z])/\U\2/g' | sed 's/ //g')
+DEST_PATH ?=
+
+git-init:
+	DEST_PATH=$(DEST_PATH) PPNAMELD=$(PPNAMELD) ./build/git-init.sh
 
 init:
 	PROJECT_NAME="$(PROJECT_NAME)" PPNAMELD=$(PPNAMELD) PPNAMEC=$(PPNAMEC) ./build/init.sh

@@ -2,6 +2,7 @@
 
 TODO: init project by running the following from a Linux/MACOS host:
 
+- [ ] copy template into new project `DEST_PATH=<PATH_TO_PLACE_PROJECT> make git-init && cd <PATH_TO_PLACE_PROJECT>`
 - [ ] init project `PROJECT_NAME="Company Product" QSID=qs-someid make init`
 - [ ] setup dev environment `make dev && pyenv shell eks-quickstart-dev`. For each new shell you use, you will need to re-run `pyenv shell eks-quickstart-dev`.
 - [ ] deploy an eks cluster to use during development `CLUSTER_NAME=eks-dev AWS_REGION=us-west-2 AWS_PROFILE=my-aws-cli-profile make eks`
